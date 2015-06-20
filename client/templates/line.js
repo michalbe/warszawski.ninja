@@ -9,6 +9,13 @@ Template.line.events({
     header.toggleClass('active')
       .parent().toggleClass('active');
   },
+  'click .collection-item .fav': function(evt) {
+    evt.stopImmediatePropagation();
+    trackEvent('Profile', 'Fav on lines list');
+    toggleFav(
+      evt.currentTarget.dataset.line,
+      evt.currentTarget.dataset.dir);
+  },
   'click .collection-item': function(evt) {
     var url = $(evt.currentTarget).find("a").attr("href");
     Router.go(url);
@@ -28,5 +35,8 @@ Template.line.helpers({
     return typeof dir === 'string' ?
       isExpanded(line) && numReports(line, dir) :
       numReports(line);
+  },
+  isFav: function(line, dir) {
+    return isFav(line, dir);
   }
 });

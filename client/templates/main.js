@@ -1,3 +1,4 @@
+Template.main.onCreated(trackPageView);
 Template.main.onCreated(function() {
   var params = Router.current().params;
   this.type = params.type;
@@ -28,16 +29,8 @@ Template.main.helpers({
 
 Template.main.events = {
   'click .fav': function(event) {
+    trackEvent('Profile', 'Fav on direction view');
     var template = Template.instance();
-
-    function callback(err, num, added) {
-      if (err) {
-        toast('O nie, wystąpił błąd!');
-      } else {
-        toast(added ? 'Dodano do ulubionych.' : 'Usunięto z ulubionych.');
-      }
-    }
-
-    toggleFav(template.line, template.dir, callback);
+    toggleFav(template.line, template.dir);
   }
 };
